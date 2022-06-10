@@ -1,0 +1,87 @@
+// Variáveis em CSS:
+// :root {
+//   --primary-color: #272727;
+//   --accent-color: #ff652f;
+//   --text-color: #fff;
+// }
+//
+// body {
+//   background: var(--primary-color);
+// }
+//
+
+@import './resets';
+@import './variables';
+
+// Funções servem para "computar" e retornar valores.
+// Em vez de escrever 'map-get($font-weights, regular/medium/bold) toda vez, é possível criar uma função que retorna isso:
+@function weight($weight-name) {
+  @return map-get($font-weights, $weight-name);
+}
+
+// Mixins devem ser usados para definir estilos/propriedades.
+@mixin flexCenter($direction) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+}
+
+// Mixin que define o estilo de cores.
+@mixin theme($light-theme: true) { // Recebe um argumento se o light-theme será aplicado (true) ou não (false).
+  // Esse mixin apenas aplica as propriedades se $light-theme for true. Isso quer dizer que, caso receba false, a classe onde o mixin for aplicada não irá aparecer no css compilado.
+  @if $light-theme {
+    background: lighten($primary-color, 100%);
+    color: darken($text-color, 100%);
+  }
+}
+
+// Esse mixin será aplicado quando a max-width da tela for igual a $mobile (no caso, 800px).
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+
+body {
+  background: $primary-color;
+  color: $text-color;
+  // font-weight: map-get($map: $font-weights, $key: bold);
+}
+
+// {
+.main {
+  @include flexCenter(row);
+  // width: 80%;
+  // No CSS -> width: calc(80% - 40%);
+  width: 80% - 40%;   // Não é possível misturar unidades/tipos ao realizar cálculos. Ex: 80% - 40px.
+  margin: 0 auto;
+
+  // .main__paragraph {
+  // &__paragraph {    -> & inclui o nome do pai. No caso, .main, resultando em .main__paragraph.
+  #{&}__paragraph1 {  //-> #{} === interpolation. Resulta em .main .main__paragraph. 
+    font-weight: weight(bold);
+
+    &:hover {       //-> .main .main__paragraph:hover
+      color: pink;
+    }
+  }
+  #{&}__paragraph2 {
+    @extend .main__paragraph1;
+
+    &:hover {
+      color: $accent-color;
+    }
+  }
+
+  // Utilizando do mixin mobile, definimos que, quando a tela for menor que 800px, a flexbox passará a ser exibida em colunas.
+  @include mobile {
+    flex-direction: column;
+  }
+}
+// } -> nesting: é possível encadear tags/classes/elementos, apesar de não ser recomendado em projetos muito extensos.
+
+.light {
+  // @include theme($light-theme: false);
+  @include theme($light-theme: true);
+}

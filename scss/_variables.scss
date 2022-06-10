@@ -1,0 +1,17 @@
+// Variáveis em CSS são compatíveis com 94% dos browsers, enquanto que em SASS a compatibilidade é de 100%, visto que SASS não transpila variáveis para CSS.
+// SASS simplesmente "aplica" as variáveis e seus valores, então não depende da compatibilidade do CSS para funcionar em 100% dos browsers.
+
+// {
+  $primary-color: #272727;
+  $accent-color: #ff652f;
+  $text-color: #fff;
+// } -> Note que as variáveis não aparecem no main.css.
+
+// maps === arrays. Sintaxe: $variavel: ("key": value) --- font-weight: map-get($map, $key)
+$font-weights: (
+  "regular": 400,
+  "medium": 500,
+  "bold": 700
+); 
+
+$mobile: 800px;

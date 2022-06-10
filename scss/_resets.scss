@@ -1,0 +1,9 @@
+// Partial sass file: arquivos cujo nome começam em '_' são arquivos "parciais" que indicam fazer parte de
+// um arquivo sass maior. Arquivos iniciados com '_' são ignorados pelo compilador. Essa é uma ótima forma
+// de modularizar um projeto.
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
